@@ -913,6 +913,13 @@ function submitOptin() {
   showScreen('screen-loading');
   document.getElementById('screen-loading').style.display = 'flex';
 
+  // Send to MailerLite via Netlify function
+  fetch('/.netlify/functions/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email })
+  }).catch(() => {}); // fail silently so quiz still works even if subscribe fails
+
   setTimeout(() => buildResults(), 2400);
 }
 
