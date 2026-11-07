@@ -918,6 +918,10 @@ function submitOptin() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email })
+  }).then(res => {
+    if (res.ok && typeof fbq === 'function') {
+      fbq('track', 'Lead');
+    }
   }).catch(() => {}); // fail silently so quiz still works even if subscribe fails
 
   setTimeout(() => buildResults(), 2400);
